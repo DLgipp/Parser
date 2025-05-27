@@ -43,12 +43,11 @@ jobs:
 
       - name: Terraform Init
         run: |
-          cd infra 
           terraform -chdir=infra init
 
       - name: Terraform Plan
         run: |
-          terraform plan
+          terraform -chdir=infra plan
 
       - name: Terraform Apply
         env:
