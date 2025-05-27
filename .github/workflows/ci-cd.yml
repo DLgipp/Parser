@@ -1,0 +1,37 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  docker-build-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v3
+
+      - name: Set up yc CLI
+        run: |
+          curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
+          export PATH="$HOME/yandex-cloud/bin:$PATH"
+          echo "$HOME/yandex-cloud/bin" >> $GITHUB_PATH
+
+      - name: Write service account key to file and login
+        run: |
+          echo '${{ secrets.YC_SA_KEY }}' > key.json
+          yc config set service-account-key key.json
+          yc container registry configure-docker
+      
+      - name: Build Docker image
+        run: docker build -t parser:latest .
+
+      - name: Tag and push Docker image to Yandex Container Registry
+        run: |
+          docker tag parser:latest ${{ secrets.YCR_REGISTRY }}/parser:latest
+          docker push ${{ secrets.YCR_REGISTRY }}/parser:latest
