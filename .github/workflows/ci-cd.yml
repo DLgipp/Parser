@@ -44,7 +44,7 @@ jobs:
 
       - name: Terraform Plan
         run: |
-          cd infra \
+          cd infra 
           terraform plan cd infra
 
       - name: Terraform Apply
@@ -52,7 +52,7 @@ jobs:
           FOLDER_ID: ${{ secrets.FOLDER_ID }}
           CLOUD_ID: ${{ secrets.CLOUD_ID }}
         run: |
-          cd infra \
+          cd infra 
           terraform apply \
           -var="folder_id=$FOLDER_ID" \
           -var="cloud_id=$CLOUD_ID"
