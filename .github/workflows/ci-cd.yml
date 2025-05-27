@@ -60,7 +60,7 @@ jobs:
           FOLDER_ID: ${{ secrets.FOLDER_ID }}
           CLOUD_ID: ${{ secrets.CLOUD_ID }}
         run: |
-          terraform -chdir=infra apply \
+          terraform -chdir=infra -auto-approve apply \
           -var="folder_id=$FOLDER_ID" \
           -var="cloud_id=$CLOUD_ID"
           cd ..
