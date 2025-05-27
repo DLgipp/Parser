@@ -25,6 +25,7 @@ jobs:
       - name: Write service account key to file and login
         run: |
           echo '${{ secrets.YC_SA_KEY }}' > key.json
+          cp key.json infra/key.json
           yc config set service-account-key key.json
           yc container registry configure-docker
       
