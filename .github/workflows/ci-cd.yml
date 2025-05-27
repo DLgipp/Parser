@@ -46,8 +46,13 @@ jobs:
           terraform -chdir=infra init
 
       - name: Terraform Plan
+        env:
+          FOLDER_ID: ${{ secrets.FOLDER_ID }}
+          CLOUD_ID: ${{ secrets.CLOUD_ID }}
         run: |
-          terraform -chdir=infra plan
+          terraform -chdir=infra plan \
+          -var="folder_id=$FOLDER_ID" \
+          -var="cloud_id=$CLOUD_ID"
 
       - name: Terraform Apply
         env:
