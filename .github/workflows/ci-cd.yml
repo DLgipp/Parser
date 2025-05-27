@@ -60,6 +60,7 @@ jobs:
           FOLDER_ID: ${{ secrets.FOLDER_ID }}
           CLOUD_ID: ${{ secrets.CLOUD_ID }}
         run: |
+          terraform state rm yandex_iam_service_account.k8s
           terraform -chdir=infra apply -auto-approve \
           -var="folder_id=$FOLDER_ID" \
           -var="cloud_id=$CLOUD_ID"
