@@ -44,7 +44,7 @@ jobs:
       - name: Terraform Init
         run: |
           cd infra 
-          terraform init
+          terraform -chdir=infra init
 
       - name: Terraform Plan
         run: |
@@ -55,7 +55,7 @@ jobs:
           FOLDER_ID: ${{ secrets.FOLDER_ID }}
           CLOUD_ID: ${{ secrets.CLOUD_ID }}
         run: |
-          terraform apply \
+          terraform -chdir=infra apply \
           -var="folder_id=$FOLDER_ID" \
           -var="cloud_id=$CLOUD_ID"
           cd ..
